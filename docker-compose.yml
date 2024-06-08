@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  laravel-docker:
+    container_name: chatapp2
+    build: .
+    volumes:
+      - ./server:/var/www/html
+    ports:
+      - 9000:80
+    depends_on:
+      - mysql_db
+      - mongo_db
+
+  mysql_db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: chatapp2db
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    ports:
+      - 9001:80
+    environment:
+      - PMA_ARBITRARY=1
+    depends_on:
+      - mysql_db
+
+  mongo_db:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mysql_data:
+  mongo_data:
