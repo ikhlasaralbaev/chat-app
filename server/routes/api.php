@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController\AuhtController;
+use App\Http\Controllers\Api\ChatController\ChatController;
 use App\Http\Controllers\Api\RoleController\RoleController;
 use App\Http\Controllers\Api\UserController\UserController;
 use Illuminate\Http\Request;
@@ -25,4 +26,11 @@ Route::group(['middleware' => ['auth:sanctum', "role:admin"]], function () {
     Route::get("/users",[UserController::class, "index"]);
     Route::delete("/users/{id}",[UserController::class, "destroy"]);
     Route::apiResource('/roles', RoleController::class);
+});
+
+Route::prefix("/chats")->name("chats.")->group(function () {
+    Route::get("", [ChatController::class, 'index']);
+    Route::post("", [ChatController::class, 'store']);
+    Route::post("/message", [ChatController::class, 'message']);
+
 });

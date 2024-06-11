@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Http\Services\Chat\ChatService;
+use App\Http\Services\Chat\ChatServiceInterface;
 use App\Http\Services\User\UserService;
 use App\Http\Services\User\UserServiceInterface;
 use App\Http\Services\UserService\UserService as UserServiceUserService;
@@ -29,6 +31,10 @@ class ServiceServiceProvider extends ServiceProvider
         $this->app->bind(
             UserServiceInterface::class,
             UserService::class
+        );
+        $this->app->bind(
+            ChatServiceInterface::class,
+            ChatService::class
         );
     }
 }
